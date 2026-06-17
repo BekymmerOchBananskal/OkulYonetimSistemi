@@ -21,6 +21,7 @@ public class DBInitializer {
 				+ "ogrenci_no TEXT NOT NULL UNIQUE, "
 				+ "email TEXT NOT NULL UNIQUE, "
 				+ "bolum_id INTEGER NOT NULL,"
+				+ "sifre TEXT NOT NULL, "
 				+ "FOREIGN KEY(bolum_id) REFERENCES bolumler(id) "
 				+ ");";
 		
@@ -30,6 +31,7 @@ public class DBInitializer {
 				+ "soyad TEXT NOT NULL, "
 				+ "email TEXT NOT NULL UNIQUE, "
 				+ "bolum_id INTEGER NOT NULL, "
+				+ "sifre TEXT NOT NULL, " 
 				+ "FOREIGN KEY(bolum_id) REFERENCES bolumler(id) "
 				+ ");";
 		

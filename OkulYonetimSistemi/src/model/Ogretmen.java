@@ -6,19 +6,22 @@ public class Ogretmen {
 	private String soyad;
 	private String email;
 	private int bolumId;
+	private String sifre;
 	
-	public Ogretmen(String ad,String soyad,String email,int bolumId) {
+	public Ogretmen(String ad,String soyad,String email,int bolumId,String sifre) {
 		this.ad=ad;
 		this.soyad=soyad;
 		this.email=email;
 		this.bolumId=bolumId;
+		this.sifre = sifre;
 	}
-	public Ogretmen(int id,String ad,String soyad,String email,int bolumId) {
+	public Ogretmen(int id,String ad,String soyad,String email,int bolumId,String sifre) {
 		this.id=id;
 		this.ad=ad;
 		this.soyad=soyad;
 		this.email=email;
 		this.bolumId=bolumId;
+		this.sifre = sifre;
 	}
 	public int getId() {
 		return id;
@@ -53,5 +56,12 @@ public class Ogretmen {
 	
 	public void setBolumId(int bolumId) {
 		this.bolumId=bolumId;
+	}
+	public String getSifre() {
+	    return sifre;
+	}
+
+	public void setSifre(String sifre) {
+	    this.sifre = sifre;
 	}
 }

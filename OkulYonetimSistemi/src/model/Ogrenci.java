@@ -8,23 +8,26 @@ public class Ogrenci {
 	private String ogrenciNo;
 	private String email;
 	private int bolumId;
+	private String sifre;
 	
-	public Ogrenci(String ad,String soyad,String ogrenciNo,String email,int bolumId) {
+	public Ogrenci(String ad,String soyad,String ogrenciNo,String email,int bolumId,String sifre) {
 		this.ad=ad;
 		this.soyad=soyad;
 		this.ogrenciNo=ogrenciNo;
 		this.email=email;
 		this.bolumId=bolumId;
+		this.sifre = sifre;
 		
 	}
 	
-	public Ogrenci(int id,String ad,String soyad,String ogrenci_no,String email,int bolum_id) {
+	public Ogrenci(int id,String ad,String soyad,String ogrenci_no,String email,int bolum_id,String sifre) {
 		this.id=id;
 		this.ad=ad;
 		this.soyad=soyad;
 		this.ogrenciNo=ogrenci_no;
 		this.email=email;
 		this.bolumId=bolum_id;
+		this.sifre = sifre;
 		
 	}
 	
@@ -61,5 +64,12 @@ public class Ogrenci {
 	}
 	public void setBolumId(int bolumId) {
 		this.bolumId=bolumId;
+	}
+	public String getSifre() {
+	    return sifre;
+	}
+
+	public void setSifre(String sifre) {
+	    this.sifre = sifre;
 	}
 }
