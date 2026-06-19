@@ -2,9 +2,13 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.DBConnection;
 import model.BolumDers;
+import model.Not;
 
 public class BolumDersDAO {
 	public boolean ekle(BolumDers bd) {
@@ -32,5 +36,29 @@ public class BolumDersDAO {
         }
 
         
+    }
+	public List<BolumDers> listele(){
+		List<BolumDers> bolumDersler =new ArrayList<>();
+		String sql="SELECT * From bolum_ders";
+		
+		try(Connection conn=DBConnection.connect();
+				PreparedStatement pstmt=conn.prepareStatement(sql)){
+				
+			    ResultSet rs = pstmt.executeQuery();
+			    
+			    while(rs.next()) {
+			    	BolumDers bolumDers = new BolumDers(
+			    			rs.getInt("id"),
+			    			rs.getInt("bolum_id"),
+			    			rs.getInt("ders_id")
+			    			
+			    			);
+			    	bolumDersler.add(bolumDers);
+			    }
+			
+		}catch(Exception e) {
+	        e.printStackTrace();
+	    }
+		return bolumDersler;
     }
 }

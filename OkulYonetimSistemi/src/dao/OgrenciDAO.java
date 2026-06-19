@@ -1,8 +1,11 @@
 package dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import database.DBConnection;
 import model.Ogrenci;
@@ -64,6 +67,35 @@ public class OgrenciDAO {
             return false;
             
         }
+	}
+	public List<Ogrenci> listele(){
+		
+		List<Ogrenci> ogrenciler =new ArrayList<>();
+		String sql="SELECT * From ogrenciler";
+		
+		try(Connection conn=DBConnection.connect();
+				PreparedStatement pstmt=conn.prepareStatement(sql)){
+				
+			    ResultSet rs = pstmt.executeQuery();
+			    
+			    while(rs.next()) {
+			    	Ogrenci ogrenci = new Ogrenci(
+			    			rs.getInt("id"),
+			    			rs.getString("ad"),
+			    			rs.getString("soyad"),
+			    			rs.getString("ogrenci_no"),
+			    			rs.getString("email"),
+			    			rs.getInt("bolum_id"),
+			    			rs.getString("sifre")
+			    			);
+			    	ogrenciler.add(ogrenci);
+			    }
+			
+		}catch(Exception e) {
+	        e.printStackTrace();
+	    }
+		return ogrenciler;
+		
 	}
 	
 }
