@@ -15,6 +15,7 @@ import model.Not;
 import model.Ogrenci;
 import model.Ogretmen;
 import view.GirisForm;
+import view.ogrenci.OgrenciPanel;
 
 public class Main {
 
@@ -23,6 +24,7 @@ public class Main {
 		//DBInitializer.createTable();
 		System.out.println("Program başlatıldı.");
 		new GirisForm();
+		
 		
 //		OgrenciDAO dao=new OgrenciDAO();
 //		Ogrenci ogrenci=dao.girisKontrol("elcin@gmail.com","240309021");

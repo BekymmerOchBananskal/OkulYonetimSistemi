@@ -218,7 +218,7 @@ public class GirisForm  extends JFrame implements ActionListener{
 		 			
 		 		   // Giriş başarılı
 		 			if(ogretmen != null && ogretmen.getId() != -1) {
-		 				JOptionPane.showMessageDialog(this, "Giriş Başarılı!\nHoş Geldiniz "+ogretmen.getAd()+" "+ogretmen.getSoyad());
+		 				JOptionPane.showMessageDialog(this, "Giriş Başarılı!\nHoş Geldin, "+ogretmen.getAd()+" "+ogretmen.getSoyad());
 		 				
 		 				//OgretmenPaneli açılır
 		 				new OgretmenPanel(ogretmen);
