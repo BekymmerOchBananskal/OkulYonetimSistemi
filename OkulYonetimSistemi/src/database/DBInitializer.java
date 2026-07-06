@@ -22,6 +22,7 @@ public class DBInitializer {
 				+ "email TEXT NOT NULL UNIQUE, "
 				+ "bolum_id INTEGER NOT NULL,"
 				+ "sifre TEXT NOT NULL, "
+				+ "foto TEXT, "
 				+ "FOREIGN KEY(bolum_id) REFERENCES bolumler(id) "
 				+ ");";
 		

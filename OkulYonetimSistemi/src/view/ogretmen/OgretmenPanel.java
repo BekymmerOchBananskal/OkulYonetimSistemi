@@ -20,6 +20,7 @@ import model.Ogretmen;
 
 public class OgretmenPanel extends JFrame implements ActionListener {
 
+	JButton btnOgrenci,btnNot,btnDers,btnBolum,btnRapor,btnCikis;
 	public OgretmenPanel(Ogretmen ogretmen) {
 		setTitle("Akademisyen Paneli");
 		setSize(500,400);
@@ -48,7 +49,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 JPanel ustPanel=new JPanel(new BorderLayout());
 		 ustPanel.setPreferredSize(new Dimension(500, 30));
 		 ustPanel.setBorder(
-				 BorderFactory.createLineBorder(Color.BLACK,3)
+				 BorderFactory.createLineBorder(Color.WHITE,3)
 				);
 		 
 		 //Üst panel icon
@@ -99,8 +100,9 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 
 		 ImageIcon scaledOgrIcon = new ImageIcon(btnOgrImg);
 
-		 JButton btnOgrenci = new JButton("Öğrenci İşleri", scaledOgrIcon);
+		 btnOgrenci = new JButton("Öğrenci İşleri", scaledOgrIcon);
 		 btnOgrenci.setFont(new Font("Segoe UI", Font.BOLD, 11));
+		 btnOgrenci.addActionListener(this);
 		 
 		 //Not işlemleri icon
 		 ImageIcon btnNotIcon= new ImageIcon(getClass().getResource("/img/notIslemleriIcon.png"));
@@ -108,7 +110,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 ImageIcon scaledNotIcon = new ImageIcon(btnNotImg);
 		 
 		 //Not işlemleri buton
-		 JButton btnNot=new JButton("Not İşlemleri",scaledNotIcon);
+		 btnNot=new JButton("Not İşlemleri",scaledNotIcon);
 		 btnNot.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 
 		 //Ders İşlemleri icon
@@ -117,7 +119,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 ImageIcon scaledDersIcon=new ImageIcon(btnDersImg);
 		 
 		 //Ders işlemleri Buton
-		 JButton btnDers=new JButton("Ders İşlemleri",scaledDersIcon);
+		 btnDers=new JButton("Ders İşlemleri",scaledDersIcon);
 		 btnDers.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 
 		 //Bölüm İşlemleri icon
@@ -126,7 +128,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 ImageIcon scaledBolumIcon=new ImageIcon(btnBolumImg);
 		 
 		 //Bölüm işlemleri buton
-		 JButton btnBolum=new JButton("Bölüm İşlemleri",scaledBolumIcon);
+		 btnBolum=new JButton("Bölüm İşlemleri",scaledBolumIcon);
 		 btnBolum.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 
 		 //Rapor işlemleri icon
@@ -135,7 +137,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 ImageIcon scaledRaporIcon=new ImageIcon(btnRaporImg);
 		 
 		 //Bölüm işlemleri buton
-		 JButton btnRapor=new JButton("Rapor İşlemleri",scaledRaporIcon);
+		 btnRapor=new JButton("Rapor İşlemleri",scaledRaporIcon);
 		 btnRapor.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 
 		//Rapor işlemleri icon
@@ -144,7 +146,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 ImageIcon scaledCikisIcon=new ImageIcon(btnCikisImg);
 		 
 		 //Bölüm işlemleri buton
-		 JButton btnCikis=new JButton("Çıkış",scaledCikisIcon);
+		 btnCikis=new JButton("Çıkış",scaledCikisIcon);
 		 btnCikis.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 
 		 
@@ -173,5 +175,11 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 	}
 	
 	 @Override
-	    public void actionPerformed(ActionEvent e) {}
+	    public void actionPerformed(ActionEvent e) {
+		//Öğrenci Butonuna basıldıysa
+		 if(e.getSource()==btnOgrenci) {
+			 new OgrenciIsleriPanel();
+			 dispose();
+		 }
+	 }
 }
