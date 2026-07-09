@@ -44,7 +44,7 @@ public class OgrenciDAO {
 	}
 	
 	public boolean ekle(Ogrenci ogrenci) {
-		String sql="INSERT INTO ogrenciler(ad,soyad,ogrenci_no,email,bolum_id,sifre) VALUES(?,?,?,?,?,?)";
+		String sql="INSERT INTO ogrenciler(ad,soyad,ogrenci_no,email,bolum_id,sifre,foto) VALUES(?,?,?,?,?,?,?)";
 		
 		try (Connection conn = DBConnection.connect();
 	             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -55,6 +55,7 @@ public class OgrenciDAO {
 				pstmt.setString(4, ogrenci.getEmail());
 				pstmt.setInt(5, ogrenci.getBolumId());
 				pstmt.setString(6, ogrenci.getSifre());
+				pstmt.setString(7, ogrenci.getFoto());
 				
 			
 				pstmt.executeUpdate();
@@ -71,7 +72,10 @@ public class OgrenciDAO {
 	public List<Ogrenci> listele(){
 		
 		List<Ogrenci> ogrenciler =new ArrayList<>();
-		String sql="SELECT * From ogrenciler";
+		String sql="SELECT o.*, b.ad AS bolum_adi\r\n"
+				+ "FROM ogrenciler o\r\n"
+				+ "JOIN bolumler b\r\n"
+				+ "ON o.bolum_id = b.id;";
 		
 		try(Connection conn=DBConnection.connect();
 				PreparedStatement pstmt=conn.prepareStatement(sql)){
@@ -81,12 +85,14 @@ public class OgrenciDAO {
 			    while(rs.next()) {
 			    	Ogrenci ogrenci = new Ogrenci(
 			    			rs.getInt("id"),
-			    			rs.getString("ad"),
-			    			rs.getString("soyad"),
-			    			rs.getString("ogrenci_no"),
-			    			rs.getString("email"),
-			    			rs.getInt("bolum_id"),
-			    			rs.getString("sifre")
+			    		    rs.getString("ad"),
+			    		    rs.getString("soyad"),
+			    		    rs.getString("ogrenci_no"),
+			    		    rs.getString("email"),
+			    		    rs.getInt("bolum_id"),
+			    		    rs.getString("bolum_adi"),
+			    		    rs.getString("sifre"),
+			    		    rs.getString("foto")
 			    			);
 			    	ogrenciler.add(ogrenci);
 			    }

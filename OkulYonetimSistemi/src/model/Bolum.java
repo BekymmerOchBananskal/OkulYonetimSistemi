@@ -21,7 +21,10 @@ public class Bolum {
 		return ad;
 		
 	}
-	
+	@Override
+	public String toString() {
+	    return ad;
+	}
 	public void setAd(String ad) {
 		this.ad=ad;
 	}

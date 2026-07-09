@@ -78,9 +78,11 @@ public class GirisForm  extends JFrame implements ActionListener{
 	     //Öğrenci Öğretmen radiobuttonlar
 	     rdOgrenci = new JRadioButton("Öğrenci");
 	     rdOgretmen = new JRadioButton("Öğretmen");
+	     
 	  // Radio buttonların arka planını transparan yapma
 	     rdOgrenci.setOpaque(false);
 	     rdOgretmen.setOpaque(false);
+	     
 	  // Radio button yazı renkleri
 	     rdOgrenci.setForeground(Color.WHITE);
 	     rdOgretmen.setForeground(Color.WHITE);
@@ -94,8 +96,9 @@ public class GirisForm  extends JFrame implements ActionListener{
 	     radioPanel.add(rdOgrenci);
 	     radioPanel.add(rdOgretmen);
 	     
-	     //Giriş button
+	     // Giriş button
 	     btnGiris=new JButton("Giriş");
+	     
 	  // Butona tıklama olayı ekleme
 	     btnGiris.addActionListener(this);
 	     

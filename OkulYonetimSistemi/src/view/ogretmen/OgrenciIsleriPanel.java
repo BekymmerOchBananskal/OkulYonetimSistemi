@@ -9,24 +9,35 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-public class OgrenciIsleriPanel extends JFrame {
+import dao.BolumDAO;
+import dao.OgrenciDAO;
+import model.Bolum;
+import model.Ogrenci;
+import model.Ogretmen;
+
+public class OgrenciIsleriPanel extends JFrame implements ActionListener {
 	
 	JLabel lblFoto,lblAd,lblSoyad,lblOgrenciNo,lblEmail,lblSifre,lblBolum;
 	JTextField txtAd,txtSoyad,txtOgrenciNo,txtEmail,txtSifre,txtAra;
-	JComboBox<String> cbBolum;
+	JComboBox<Bolum> cbBolum;
 	JButton btnEkle,btnGuncelle,btnSil,btnTemizle,btnFotoSec,btnAra,btnGeri;
 	// Tablo ve tablo modeli
     JTable table;
     DefaultTableModel model;
     JScrollPane scrollPane;
+    Ogretmen ogretmen;
 	
-	public OgrenciIsleriPanel() {
+	public OgrenciIsleriPanel(Ogretmen ogretmen) {
 		// Arayüz özellikleri
 		setTitle("Öğrenci İşleri Paneli");
 		setSize(600,500);
@@ -34,6 +45,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
+		this.ogretmen=ogretmen;
 		
 		// Arka plan resim
 		ImageIcon bg= new ImageIcon(getClass().getResource("/img/mavirenk.jpg"));
@@ -139,9 +151,9 @@ public class OgrenciIsleriPanel extends JFrame {
 		 lblBolum.setForeground(Color.WHITE);
 		 
 		 // Combobox bölüm
-		 cbBolum=new JComboBox();
+		 cbBolum=new JComboBox<>();
 		 cbBolum.setFont(font);
-		 cbBolum.setPreferredSize(fieldSize);
+		 cbBolum.setPreferredSize(new Dimension(160, 20));
 		 
 		// Şifre label
 		lblSifre=new JLabel("Şifre: ");
@@ -165,6 +177,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnFotoSec.setHorizontalTextPosition(SwingConstants.CENTER);
 		 btnFotoSec.setVerticalTextPosition(SwingConstants.BOTTOM);
 		 btnFotoSec.setFont(new Font("Segoe UI",Font.BOLD,9));
+		 btnFotoSec.addActionListener(this);
 		 
 		 //İşlem butonları
 		 // Ekleme butonu
@@ -174,6 +187,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnEkle=new JButton("Ekle",scaledEkleIcon);
 		 btnEkle.setFont(new Font("Segoe UI", Font.BOLD, 11));
 		 btnEkle.setPreferredSize(new Dimension(80, 20));
+		 btnEkle.addActionListener(this);
 		 
 		 // Güncelleme butonu
 		 ImageIcon btnGuncelleIcon= new ImageIcon(getClass().getResource("/img/guncelleIcon.png"));
@@ -182,6 +196,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnGuncelle=new JButton("Güncelle",scaledGuncelleIcon);
 		 btnGuncelle.setFont(new Font("Segoe UI", Font.BOLD, 11));
 		 btnGuncelle.setPreferredSize(new Dimension(110, 20));
+		 btnGuncelle.addActionListener(this);
 		 
 		 // Silme butonu
 		 ImageIcon btnSilIcon= new ImageIcon(getClass().getResource("/img/silIcon.png"));
@@ -190,6 +205,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnSil=new JButton("Sil",scaledSilIcon);
 		 btnSil.setFont(new Font("Segoe UI", Font.BOLD, 11));
 		 btnSil.setPreferredSize(new Dimension(80, 20));
+		 btnSil.addActionListener(this);
 		 
 		 // Temizleme butonu
 		 ImageIcon btnTemizleIcon= new ImageIcon(getClass().getResource("/img/temizleIcon.png"));
@@ -198,6 +214,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnTemizle=new JButton("Temizle",scaledTemizleIcon);
 		 btnTemizle.setFont(new Font("Segoe UI", Font.BOLD, 11));
 		 btnTemizle.setPreferredSize(new Dimension(100, 20));
+		 btnTemizle.addActionListener(this);
 		 
 		 // İşlem Paneli
 		 JPanel islemPanel=new JPanel(new FlowLayout(FlowLayout.LEFT,5,0));
@@ -225,6 +242,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 btnAra=new JButton("Ara",scaledAraIcon);
 		 btnAra.setFont(new Font("Segoe UI",Font.BOLD,9));
 		 btnAra.setPreferredSize(new Dimension(80, 20));
+		 btnAra.addActionListener(this);
 		 
 		 aramaPanel.add(lblAra);
 		 aramaPanel.add(txtAra);
@@ -258,11 +276,11 @@ public class OgrenciIsleriPanel extends JFrame {
         table.getColumnModel().getColumn(0).setMinWidth(30);
         table.getColumnModel().getColumn(0).setMaxWidth(30);
 
-        table.getColumnModel().getColumn(1).setPreferredWidth(100);
-        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(2).setPreferredWidth(80);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        table.getColumnModel().getColumn(4).setPreferredWidth(120);
-        table.getColumnModel().getColumn(5).setPreferredWidth(120);
+        table.getColumnModel().getColumn(4).setPreferredWidth(140);
+        table.getColumnModel().getColumn(5).setPreferredWidth(140);
 
         // Tabloyu scroll pane içine alma
         scrollPane = new JScrollPane(table);
@@ -282,6 +300,7 @@ public class OgrenciIsleriPanel extends JFrame {
 		 
 		 btnGeri.setFont(new Font("Segoe UI",Font.BOLD,11));
 		 btnGeri.setPreferredSize(new Dimension(90, 25));
+		 btnGeri.addActionListener(this);
         
         geriPanel.add(btnGeri);
         altborder.setTitleFont(new Font("Segoe UI",Font.BOLD,12));
@@ -389,12 +408,90 @@ public class OgrenciIsleriPanel extends JFrame {
 	     gbc.insets = new Insets(5, 10, 5, 0);
 	     solPanel.add(aramaPanel,gbc);
 	     
+	     // JTable öğrencileri listeleme
+		listele();
 		
+		BolumDAO bolumDAO = new BolumDAO();
+		List<Bolum> bolumler = bolumDAO.listele();
+
+		for (Bolum bolum : bolumler) {
+		    cbBolum.addItem(bolum);
+		}
+		
+		// Panelleri ekleme
 		ustPanel.add(solPanel,BorderLayout.WEST);
 		ustPanel.add(sagPanel,BorderLayout.CENTER);
 		background.add(ustPanel,BorderLayout.NORTH);
 		background.add(altPanel,BorderLayout.CENTER);
 		setContentPane(background);
 		setVisible(true);
+	}
+	
+	//J
+	private void listele() {
+		OgrenciDAO ogrenciDAO=new OgrenciDAO();
+		
+		List<Ogrenci>ogrenciler=ogrenciDAO.listele();
+		model.setRowCount(0);
+		for(Ogrenci ogrenci:ogrenciler) {
+			model.addRow(new Object[] {
+			        ogrenci.getId(),
+			        ogrenci.getAd(),
+			        ogrenci.getSoyad(),
+			        ogrenci.getOgrenciNo(),
+			        ogrenci.getBolumAdi(),   
+			        ogrenci.getEmail()
+			    });
+		}
+	}
+	
+	private int secilenBolumId() {
+		Bolum bolum = (Bolum) cbBolum.getSelectedItem();
+		
+		if (bolum !=null) {
+			return bolum.getId();
+		}
+		return -1;
+	}
+	
+	@Override
+    public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btnGeri) {
+			new OgretmenPanel(ogretmen);
+			dispose();
+		}
+		
+		else if(e.getSource()==btnEkle) {
+			int bolumId=-1;
+			bolumId=secilenBolumId();
+			Ogrenci ogrenci=new Ogrenci(
+					txtAd.getText(),
+					txtSoyad.getText(),
+					txtOgrenciNo.getText(),
+					txtEmail.getText(),
+					bolumId,
+					txtSifre.getText(),
+					lblFoto.getText()
+					);
+			OgrenciDAO ogrenciDAO=new OgrenciDAO();
+			ogrenciDAO.ekle(ogrenci);
+			
+			listele();
+			
+		}
+		
+		else if(e.getSource()==btnFotoSec) {
+			JFileChooser jfc= new JFileChooser();
+			
+			if(jfc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
+				
+				File file=jfc.getSelectedFile();
+				
+				ImageIcon icon=new ImageIcon(file.getAbsolutePath());
+				Image img=icon.getImage().getScaledInstance(lblFoto.getWidth(),lblFoto.getHeight(),Image.SCALE_SMOOTH);
+				lblFoto.setIcon(new ImageIcon(img));
+				lblFoto.setText(null);
+			}
+		}
 	}
 }

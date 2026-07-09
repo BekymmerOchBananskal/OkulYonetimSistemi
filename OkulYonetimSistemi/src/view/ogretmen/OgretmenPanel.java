@@ -14,15 +14,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import model.Ogretmen;
+import view.GirisForm;
 
 public class OgretmenPanel extends JFrame implements ActionListener {
 
 	JButton btnOgrenci,btnNot,btnDers,btnBolum,btnRapor,btnCikis;
+	Ogretmen ogretmen;
 	public OgretmenPanel(Ogretmen ogretmen) {
 		setTitle("Akademisyen Paneli");
+		this.ogretmen=ogretmen;
 		setSize(500,400);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -148,6 +152,7 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 		 //Bölüm işlemleri buton
 		 btnCikis=new JButton("Çıkış",scaledCikisIcon);
 		 btnCikis.setFont(new Font("Segoe UI",Font.BOLD,11));
+		 btnCikis.addActionListener(this);
 		 
 		 
 		 //Buton paneli
@@ -178,8 +183,22 @@ public class OgretmenPanel extends JFrame implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
 		//Öğrenci Butonuna basıldıysa
 		 if(e.getSource()==btnOgrenci) {
-			 new OgrenciIsleriPanel();
+			 new OgrenciIsleriPanel(ogretmen);
 			 dispose();
+		 }
+		 else if(e.getSource()==btnCikis) {
+			 int secim = JOptionPane.showConfirmDialog(
+			            this,
+			            "Çıkış yapmak istediğinize emin misiniz?",
+			            "Çıkış",
+			            JOptionPane.YES_NO_OPTION,
+			            JOptionPane.QUESTION_MESSAGE
+			    );
+
+			    if (secim == JOptionPane.YES_OPTION) {
+			        new GirisForm();   // Giriş ekranını aç
+			        dispose();         // Öğretmen panelini kapat
+			    }
 		 }
 	 }
 }
